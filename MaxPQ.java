@@ -165,7 +165,7 @@ public class MaxPQ<T> {
      * them repeatedly. Make sure to avoid loitering by nulling out the dead
      * item.
      */
-    public T removeMin() {
+    public T removeMax() {
         T temp = this.contents[1].item();
         this.contents[1] = this.contents[size];
         this.contents[size] = null;
@@ -190,17 +190,18 @@ public class MaxPQ<T> {
      * bonus problem, but shouldn't be too hard if you really understand heaps
      * and think about the algorithm before you start to code.
      */
-    public void changePriority(T item, int index, int value) {
+    public boolean changePriority(T item, int index) {
         for (int i = 1; i <= size; i++) {
             if (this.contents[i].item().equals(item)) {
-                this.contents[i].setPriority(index, value);
+                this.contents[i].setPriority(index, this.contents[i].priority()[index] + 1);
                 this.swim(i);
                 if (this.contents[i] != null) {
                     this.sink(i);
                 }
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
